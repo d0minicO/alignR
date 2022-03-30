@@ -1,9 +1,10 @@
 
 alignR <- function(base="C:/Users/dowens/OneDrive/Postdoc/Projects/GID4/Paper/Bioinformatics/alignR/",
-                   uniprot_IDs = c("P04637","P02340","P10361"),
-                   seqs = c("MEEPQSDPSV","MTAMEESQSD","MEDSQSDMSI"),
+                   uniprot_IDs = NULL,
+                   seqs = NULL,
                    n_seqs = c("P53_HUMAN","P53_MOUSE", "P53_RAT"),
-                   n = "alignR_p53"){
+                   n = "alignR_p53",
+                   printPDF=T){
   
   ## function for aligning two or more amino acid sequences in R
   ## uses biostrings and msa packages to do the alignment
@@ -29,7 +30,7 @@ alignR <- function(base="C:/Users/dowens/OneDrive/Postdoc/Projects/GID4/Paper/Bi
   ## will always try to output a .tex file, and a .fasta file
   ## if printPDF = TRUE, and **tinytex is working** a pdf of the alignment will also be saved
   ## and if only two sequences have been aligned then a text file of the percentage identity between them will also be saved
-  
+  ## if having problems trying running with printPDF = F and see if .tex and fasta files output, in that case, it is likely an issue with tinytex. You can view the fasta alignment in snapgene!
   
   
   ##########################
@@ -78,9 +79,19 @@ alignR <- function(base="C:/Users/dowens/OneDrive/Postdoc/Projects/GID4/Paper/Bi
   ## WORK STARTS HERE ##
   ######################
   
+  # quick logical check that sequences or uniprot ids were given
+  if(is.null(uniprot_IDs) & is.null(seqs)){
+    message("Must provide either uniprot IDs or sequences as characters \n")
+    break
+  }
+  
+  
+  
   # if we're given uniprot IDs then use this for loop to pull the sequences
   # requires active internet connection
-  if(!is.null(uniprot_IDs)){
+  if(!is.null(uniprot_IDs) & is.null(seqs)){
+    
+    message("Using provided uniprot IDs \n")
     
     seqs = c()
     for(id in uniprot_IDs){
@@ -93,7 +104,8 @@ alignR <- function(base="C:/Users/dowens/OneDrive/Postdoc/Projects/GID4/Paper/Bi
     
 
     
-  } else {
+  } else if(is.null(uniprot_IDs) & !is.null(seqs)) {
+    message("Using provided sequences \n")
     seqs = seqs
   }
   
@@ -171,14 +183,18 @@ alignR <- function(base="C:/Users/dowens/OneDrive/Postdoc/Projects/GID4/Paper/Bi
     "\\end{document}"),
     texFile)
   
-  message("Printing the pdf for you now... \n")
   
-  ## save pdf in current working directory
-  ## cannot get it to output to base directory directly
-  tools::texi2pdf(texFile, clean=TRUE)
-  #rename the temp file to move it to the desired output folder
-  pdf_file_temp = paste0("~/","alignR_",n,".pdf")
-  file.rename(pdf_file_temp, pdfFile)
+  if(printPDF){
+    message("Printing the pdf for you now... \n")
+    
+    ## save pdf in current working directory
+    ## cannot get it to output to base directory directly
+    tools::texi2pdf(texFile, clean=TRUE)
+    #rename the temp file to move it to the desired output folder
+    pdf_file_temp = paste0("~/","alignR_",n,".pdf")
+    file.rename(pdf_file_temp, pdfFile)
+  }
+
   
 }
   
