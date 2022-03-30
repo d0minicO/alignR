@@ -16,7 +16,7 @@ alignR <- function(base="C:/Users/dowens/OneDrive/Postdoc/Projects/GID4/Paper/Bi
   # uniprot_IDs = a character vector of uniprot IDs to align eg c("P04637","P02340","P10361") # leave it blank if you are manually inputting the sequences OR
   # seqs = character vector of custom amino acid sequences to align eg c("MEEPQSDPSV","MTAMEESQSD","MEDSQSDMSI") ## goofd for aligning shorter peptides or other sequences not on uniprot!
   # n_seqs = character vector of names of amino acid sequences in same order as the custom sequences eg c("P53_HUMAN","P53_MOUSE", "P53_RAT") ## not needed if uniprot IDs given, but can be supplied if a custom naming is preferred which will overwrite the uniprot default name
-  # n = prefix name to give the outputs eg "alignR_p53"
+  # n = suffix name to give the outputs eg "p53" ("alignR_" will be appended to the start)
   
   
   ## outputs
@@ -144,7 +144,7 @@ alignR <- function(base="C:/Users/dowens/OneDrive/Postdoc/Projects/GID4/Paper/Bi
   # save the alignment in a way texshade can compile
   msaPrettyPrint(aligned,
                  alFile = alFile,
-                 output="asis",
+                 #output="none",
                  askForOverwrite=FALSE)
   
   
