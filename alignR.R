@@ -144,7 +144,7 @@ alignR <- function(base="C:/Users/dowens/OneDrive/Postdoc/Projects/GID4/Paper/Bi
   # save the alignment in a way texshade can compile
   msaPrettyPrint(aligned,
                  alFile = alFile,
-                 #output="none",
+                 output="tex",
                  askForOverwrite=FALSE)
   
   
