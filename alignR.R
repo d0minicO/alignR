@@ -67,6 +67,8 @@ alignR <- function(base="C:/Users/dowens/OneDrive/Postdoc/Projects/GID4/Paper/Bi
   ## outputs ##
   #############
   
+  dir.create(base,showWarnings = F)
+  
   alignDir = paste0(base,"alignR_out/")
   dir.create(alignDir,showWarnings = F)
   
