@@ -1,9 +1,9 @@
 
-alignR <- function(base="C:/Users/dowens/OneDrive/Postdoc/Projects/GID4/Paper/Bioinformatics/alignR/",
+alignR <- function(base=paste0(getwd(),'/'),
                    uniprot_IDs = NULL,
                    seqs = NULL,
                    n_seqs = NULL,
-                   n = "alignR_p53",
+                   n = "name",
                    printPDF=T){
   
   ## function for aligning two or more amino acid sequences in R
@@ -196,13 +196,18 @@ alignR <- function(base="C:/Users/dowens/OneDrive/Postdoc/Projects/GID4/Paper/Bi
   
   if(printPDF){
     message("Printing the pdf for you now... \n")
-    
+
+    ### OLD WAY
     ## save pdf in current working directory
     ## cannot get it to output to base directory directly
-    tools::texi2pdf(texFile, clean=TRUE)
+    #tools::texi2pdf(texFile, clean=TRUE)
     #rename the temp file to move it to the desired output folder
-    pdf_file_temp = paste0("~/","alignR_",n,".pdf")
-    file.rename(pdf_file_temp, pdfFile)
+    #pdf_file_temp = paste0("~/","alignR_",n,".pdf")
+    #file.rename(pdf_file_temp, pdfFile)
+    
+    ### NEW WAY
+    ## outputs direct to output folder with tinytex, working now
+    tinytex::pdflatex(texFile)
   }
 
   
